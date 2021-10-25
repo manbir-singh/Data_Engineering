@@ -10,19 +10,38 @@ DEPENDENCIES:
 1. gspread
 2. pandas
 3. numpy
-4. sqlalchemy
-5. sqlite3
-6. datetime
-7. config (.py file containing api credentials for google sheets api and TMDB api, not uploaded here for security/privacy reasons)
-8. credentials (.json file containing private key for the google sheets data, also not upload here)
-9. TfidVectorizer from sklearn.feature_extraction.text
-10. linear_kernel from sklearn.metrics.pairwise
-11. CountVectorizer from sklearn.feature_extraction.text
-12. cosine_similarity from sklearn.metrics.pairwise
-13. literal_eval from ast
+4. requests
+5. sqlalchemy
+6. sqlite3
+7. datetime
+8. config (.py file containing api credentials for google sheets api and TMDB api, not uploaded here for security/privacy reasons)
+9. credentials (.json file containing private key for the google sheets data, also not upload here)
+10. TfidVectorizer from sklearn.feature_extraction.text
+11. linear_kernel from sklearn.metrics.pairwise
+12. CountVectorizer from sklearn.feature_extraction.text
+13. cosine_similarity from sklearn.metrics.pairwise
+14. literal_eval from ast
+15. Movie Dataset for Recommender (https://www.kaggle.com/rounakbanik/the-movies-dataset)
  
 
-DETIALS:
+DETAILS:
 
-The google sheets data was extracted into a pandas DataFrame which had columns for movie title and year.
-The Datacamp recommender movie system bases its movie recommendations on a
+EXTRACT:
+The google sheets data was extracted into a pandas DataFrame which had columns for movie title and year using the gspread api and requests package.
+The Datacamp recommender movie system bases its movie recommendations on a folder of CSV files containing movie, keywords, and cast and crew details.
+With that being said, this recommender can only recommend movies within the CSV file, and not new movies as an error will occur.
+
+TRANSFORM:
+Therefore we needed to combine the google sheets data with the pandas DataFrame that holds movie dataset CSV files.
+In order to do so, the google sheets data needs to be transformed to include the same level of detail that the CSV files have and that the recommender uses(id, title, overview, release_date, director, cast, crew, genres, keywords, soup).
+This was done using the requests library with the TMDB api.
+As a result the Movie Class was created, which takes in a movie title and year and returns a dictionary with the full movie details, ready to be merged with the Recommender's movie metadata DataFrame.
+
+The google sheets data was fed into the Movie Class, in which the returned dictionaries were appeneded into a metadata_df DataFrame in main.py, and finally merged with the Recommender's metadata DataFrame.
+Then the Recommender's metadata with the google sheets movies were fed into the recommender function to return recommended movies
+We have finally extended the use of Datacamps limited recommender system!
+Furthermore the recommended movies were added as a column to the main metadata_df.
+
+LOAD:
+Finally, the metadata_df in main.py was loaded into a SQLite database using sqlalchemy.
+SQL queries were used to Create the table in the database and then insert the data into the table (in progress, there is a syntax error when inserting data that I cannot seem to fix).
