@@ -46,3 +46,9 @@ Furthermore the recommended movies were added as a column to the main metadata_d
 LOAD:
 Finally, the metadata_df in main.py was loaded into a SQLite database using sqlalchemy.
 SQL queries were used to Create the table in the database and then insert the data into the table (in progress, there is a syntax error when inserting data that I cannot seem to fix).
+
+
+NOTES:
+The movie class can be used standalone as an extension of the TMDB api, to retrieve complete movie data, and is stored into a dictionary.
+
+Although it was out of the scope for this project, the recommender function can also be extended even more by creating a movie object that is neither in the google sheets or the recommender's CSV to ultimately recommend ANY movie. You can simply take a movie title and year, create the movie object run the recommender's attributes and functions in main.py to append to the CSV metadata dataframe. Then run the recommender function to get the new titles recommended movie. I was unable to run the function more than once due to a lack of ram on my device. 
