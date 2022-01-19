@@ -1,6 +1,6 @@
 # Data_Engineering
 
-Google Sheets Movie Recommender ETL Pipeline
+Google Sheets Movie Recommender Data Pipeline (ETL)
 
 
 This project aims to recommend movies based on a shared watch list on google sheets, containing the movie title and year. From there a recommender system was created following Datacamp's tutorial. The functionality of this recommender was extended to allow recommendations for new movies. Furthermore, a Movie Class was created using object oriented programming (OOP) to transform the movie data by adding more detailed metadata using the requests library and TMDB API. Afterwards the movies are loaded into the recommender function, which were then loaded into SQLite (a relational database management system) (in progress). Automation via Apache Airflow coming soon!
